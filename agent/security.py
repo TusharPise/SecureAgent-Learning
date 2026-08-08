@@ -1,6 +1,7 @@
 import re
 from agent.security_ai import security_judge
 
+
 BLOCKED_PATTERNS = [
 
     # Prompt Injection
@@ -35,8 +36,9 @@ def check_input(user_input):
 
     return True
 
-def ai_security_check(user_input):
 
-    result = security_judge(user_input)
+def ai_security_check(user_input, api_key):
+
+    result = security_judge(user_input, api_key)
 
     return result == "ALLOW"

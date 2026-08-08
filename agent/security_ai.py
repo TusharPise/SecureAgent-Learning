@@ -1,7 +1,9 @@
-from agent.llm import client, MODEL_NAME
+from google import genai
 
-def security_judge(user_input):
+MODEL_NAME = "gemini-3.1-flash-lite"
 
+
+def security_judge(user_input, api_key):
     prompt = f"""
 You are an AI security classifier.
 
@@ -33,9 +35,15 @@ User:
 {user_input}
 """
 
-    response = client.models.generate_content(
-        model=MODEL_NAME,
-        contents=prompt
-    )
+    try:
+        client = genai.Client(api_key=api_key)
 
-    return response.text.strip()
+        response = client.models.generate_content(
+            model=MODEL_NAME,
+            contents=prompt
+        )
+
+        return response.text.strip()
+
+    except Exception:
+        return "BLOCK"
